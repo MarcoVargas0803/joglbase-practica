@@ -74,9 +74,7 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
                 
                 BorderLayout bl = new BorderLayout();
                 
-                
                 frame.getContentPane().add(canvas,BorderLayout.CENTER);
-
                 frame.addKeyListener((KeyListener) canvas);
 
                 frame.addWindowListener(new WindowAdapter() {
@@ -139,8 +137,15 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
         gl.glEnable(GL_DEPTH_TEST); // enables depth testing
         gl.glDepthFunc(GL_LEQUAL);  // the type of depth test to do  
 
-        gl.glMatrixMode(GL_MODELVIEW);
-        gl.glLoadIdentity();  // reset the model-view matrix
+        gl.glMatrixMode(GL_MODELVIEW);  // Escala, Rotacion, Traslacion
+        gl.glLoadIdentity(); // reset the model-view matrix
+        
+        /*
+              | 1   0   0   0 |  Matriz Identidad para ModelView 
+              | 0   1   0   0 |
+              | 0   0   1   0 |
+              | 0   0   0   1 |
+        */
                 
     }
 
@@ -161,6 +166,13 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
         // Setup perspective projection, with aspect ratio matches viewport
         gl.glMatrixMode(GL_PROJECTION);  // choose projection matrix
         gl.glLoadIdentity();             // reset projection matrix
+        
+        /*
+              | 1   0   0   0 |  Matriz Identidad para Pro 
+              | 0   1   0   0 |
+              | 0   0   1   0 |
+              | 0   0   0   1 |
+        */
         
         //glu.gluPerspective(fovy, aspect, 0.1, 20.0); // fovy, aspect, zNear, zFar
         glu.gluLookAt(this.camX, this.camY, this.camZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
@@ -349,10 +361,10 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
             case KeyEvent.VK_RIGHT:
                 this.despX += 0.2f;
                 break;
-            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_A:
                 this.despZ += 0.2f;
                 break;
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_Z:
                 this.despZ -= 0.2f;
                 break;
             case KeyEvent.VK_O:
@@ -370,16 +382,16 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
             case KeyEvent.VK_2:
                 this.camY -= 0.2f;
                 break;
-            case KeyEvent.VK_6:
+            case KeyEvent.VK_H:
                 this.camX += 0.2f;
                 break;
-            case KeyEvent.VK_4:
+            case KeyEvent.VK_F:
                 this.camX -= 0.2f;
                 break;
-            case KeyEvent.VK_Z:
+            case KeyEvent.VK_T:
                 this.camZ += 0.2f;
                 break;
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_G:
                 this.camZ -= 0.2f;
                 break;
 

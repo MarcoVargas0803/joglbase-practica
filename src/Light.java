@@ -42,7 +42,7 @@ class Light extends GLJPanel implements GLEventListener, KeyListener {
     // Posicion de la luz.
     float lightX = 1f;
     float lightY = 1f;
-    float lightZ = 1f;
+    float lightZ = 2f;
     float dLight = 0.05f;
 
     // Posicion de la camara
@@ -51,17 +51,17 @@ class Light extends GLJPanel implements GLEventListener, KeyListener {
     float camZ = 4.0f;
 
     // Material y luces.       R    G     B      A
-    final float ambient[] = {0.1f, 0.1f, 0.1f, 0.1f};
+    final float ambient[] = {0.3f, 0.3f, 0.3f, 0.3f};
     
     final float position[] = {lightX, lightY, lightZ, 1.0f};
 
-    //                                R    G    B    A
+    //                           R    G      B    A
     final float[] colorBlack = {0.0f, 0.0f, 0.0f, 1.0f};
     final float[] colorWhite = {1.0f, 1.0f, 1.0f, 1.0f};
     final float[] colorGray = {0.4f, 0.4f, 0.4f, 1.0f};
     final float[] colorDarkGray = {0.2f, 0.2f, 0.2f, 1.0f};
     final float[] colorRed = {1.0f, 0.0f, 0.0f, 1.0f};
-    final float[] colorGreen = {0.0f, 1.0f, 0.0f, 1.0f};
+    final float[] colorGreen = {0.5f, 1.0f, 0.5f, 1.0f};
     final float[] colorBlue = {0.0f, 0.0f, 0.6f, 1.0f};
     final float[] colorYellow = {1.0f, 1.0f, 0.0f, 1.0f};
     final float[] colorLightYellow = {.5f, .5f, 0.0f, 1.0f};
@@ -102,8 +102,8 @@ class Light extends GLJPanel implements GLEventListener, KeyListener {
 
         // 4. Establecer caracteristicas de la luz y encenderlas - Light 0.
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient, 0 );
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, colorWhite, 0);
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_SPECULAR, colorWhite, 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, colorBlue, 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_SPECULAR, colorBlue, 0);
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position, 0);
         
         gl.glEnable(GL2.GL_LIGHT0);
@@ -116,7 +116,7 @@ class Light extends GLJPanel implements GLEventListener, KeyListener {
 
     public void initPosition(GL2 gl) {
         float posLight1[] = {lightX, lightY, lightZ, 1.0f};
-        float spotDirection1[] = {0.0f, -1.f, 0.f};
+        float spotDirection1[] = {0.0f, 0.0f, 0.0f};
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posLight1, 0);
     }
 
@@ -212,16 +212,16 @@ class Light extends GLJPanel implements GLEventListener, KeyListener {
         gl.glMaterialfv(face, GL2.GL_AMBIENT, colorDarkGray, 0);
         gl.glMaterialfv(face, GL2.GL_DIFFUSE, colorRed, 0);
         gl.glMaterialfv(face, GL2.GL_SPECULAR, colorWhite, 0);
-        gl.glMateriali(face, GL2.GL_SHININESS, 100);
+        gl.glMateriali(face, GL2.GL_SHININESS, 50);
         gl.glMaterialfv(face, GL2.GL_EMISSION, colorDarkGray, 0);
     }
 
     public void setSomeGreenMaterial(GL2 gl, int face) {
-        gl.glMaterialfv(face, GL2.GL_AMBIENT, colorDarkGray, 0);
+        gl.glMaterialfv(face, GL2.GL_AMBIENT, colorGray, 0);
         gl.glMaterialfv(face, GL2.GL_DIFFUSE, colorGreen, 0);
-        gl.glMaterialfv(face, GL2.GL_SPECULAR, colorWhite, 0);
-        gl.glMateriali(face, GL2.GL_SHININESS, 50);
-        gl.glMaterialfv(face, GL2.GL_EMISSION, colorBlack, 0);
+        gl.glMaterialfv(face, GL2.GL_SPECULAR, colorGreen, 0);
+        gl.glMateriali(face, GL2.GL_SHININESS, 120);
+        gl.glMaterialfv(face, GL2.GL_EMISSION, colorDarkGray, 0);
     }
 
     /////////////////// dibujos /////////////////////////
@@ -415,6 +415,7 @@ class Light extends GLJPanel implements GLEventListener, KeyListener {
                 break;
         }
         System.out.println("rotX = " + rotX);
+        System.out.println("Posicion de luz "+lightX+","+lightY+","+lightZ);
     }
 
     @Override

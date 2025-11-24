@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL3;
+
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLJPanel;
@@ -30,18 +32,18 @@ public class JoglBase2 {
     private static final String TITLE = "Plantilla Base java open gl";  // window's title
     private final int CANVAS_WIDTH = 640;  // width of the drawable
     private final int CANVAS_HEIGHT = 480; // height of the drawable
-    private final int FPS = 24; // animator's target frames per second
+    private final int FPS = 30; // animator's target frames per second
 
     float rotacion = 0.0f;
     float despl = 0.0f;
-    float despX = 0.0f;
-    float despY = 0.0f;
-    float despZ = 0.0f;
+    float despX = 1.0f;
+    float despY = 1.0f;
+    float despZ = 8.0f;
 
     GLJPanel canvas;
     Pintor pintor;
     FPSAnimator animator;
-    
+
     MiKeyListener keylistener;
 
     JFrame frame;
@@ -69,25 +71,48 @@ public class JoglBase2 {
     public JoglBase2() {
         this.canvas = new GLJPanel();
         this.pintor = new Pintor(this);
-        
+
         this.keylistener = new MiKeyListener(this);
 
         this.canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 
         this.canvas.addGLEventListener(pintor);
-        this.canvas.addKeyListener(keylistener);
 
-        this.animator = new FPSAnimator(canvas, 5, true);
+        this.animator = new FPSAnimator(canvas, this.FPS, true);
 
         // Create the top-level container
         frame = new JFrame(); // Swing's JFrame or AWT's Frame        
         frame.setTitle(TITLE);
-        
+
+        this.frame.addKeyListener(keylistener);
+
         bl = new BorderLayout();
-        
+
         frame.setLayout(bl);
-               
-        frame.getContentPane().add(canvas,BorderLayout.CENTER);
+
+        JPanel  panel1 = new JPanel();
+        JButton btnIni = new JButton("Iniciar");
+        JButton btnDet = new JButton("Detener");
+
+        btnIni.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                animator.start();
+            }
+        });
+
+        btnDet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                animator.stop();
+            }
+        });
+
+        panel1.add(btnIni);
+        panel1.add(btnDet);
+
+        frame.getContentPane().add(panel1, BorderLayout.NORTH);
+        frame.getContentPane().add(canvas, BorderLayout.CENTER);
 
         frame.addComponentListener(new ComponentAdapter() {
             @Override
@@ -150,10 +175,10 @@ class Pintor implements GLEventListener {
         GL2 gl = glad.getGL().getGL2();      // get the OpenGL graphics context
 
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set background (clear) color
+
         gl.glClearDepth(1.0f);      // set clear depth value to farthest
         gl.glEnable(GL_DEPTH_TEST); // enables depth testing
         gl.glDepthFunc(GL_LEQUAL);  // the type of depth test to do
- 
     }
 
     @Override
@@ -164,89 +189,113 @@ class Pintor implements GLEventListener {
     public void display(GLAutoDrawable glad) {
         GL2 gl = glad.getGL().getGL2();  // get the OpenGL 2 graphics context
         gl.glMatrixMode(GL_MODELVIEW);
-        gl.glLoadIdentity();  // reset the model-view matrix
+        gl.glLoadIdentity();
 
+        // reset the model-view matrix
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
-        glu.gluLookAt(2.0f, 2.0f, 6.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        glu.gluLookAt(this.padre.despX, // Posicion de la camara
+                this.padre.despY,
+                this.padre.despZ,
+                0.0, // Direccion X hacia donde observa la cámara
+                0.0, // Direccion Y hacia donde observa la cámara
+                0.0, // Direccion Z hacia donde observa la cámara
+                0.0, // Orientación de la cámara en X 
+                1.0, // Orientación de la cámara en Y
+                0.0);// Orientación de la cámara en Z
 
         gl.glColor3f(0.0f, 0.0f, 1.0f);
-
+//                    R     G     B
         gl.glBegin(GL2.GL_LINES);
-            gl.glVertex3f(-10.0f, 0.0f, 0.0f);
-            gl.glVertex3f(10.0f, 0.0f, 0.0f);
+        gl.glVertex3f(-10.0f, 0.0f, 0.0f);
+        gl.glVertex3f(10.0f, 0.0f, 0.0f);
         gl.glEnd();
 
+        gl.glColor3f(0.0f, 1.0f, 0.0f);
         gl.glBegin(GL2.GL_LINES);
-            gl.glVertex3f(0.0f, -10.0f, 0.0f);
-            gl.glVertex3f(0.0f, 10.0f, 0.0f);
+        gl.glVertex3f(0.0f, -10.0f, 0.0f);
+        gl.glVertex3f(0.0f, 10.0f, 0.0f);
         gl.glEnd();
 
+        gl.glColor3f(1.0f, 0.0f, 0.0f);
         gl.glBegin(GL2.GL_LINES);
-            gl.glVertex3f(0.0f, 0.0f, -10.0f);
-            gl.glVertex3f(0.0f, 0.0f, 10.0f);
+        gl.glVertex3f(0.0f, 0.0f, -10.0f);
+        gl.glVertex3f(0.0f, 0.0f, 10.0f);
         gl.glEnd();
 
         gl.glLoadIdentity();
 
-        glu.gluLookAt(2.0f, 2.0f, 6.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        //glu.gluLookAt(2.0f, 2.0f, 6.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        glu.gluLookAt(this.padre.despX, // Posicion de la camara
+                this.padre.despY,
+                this.padre.despZ,
+                0.0, // Direccion X hacia donde observa la cámara
+                0.0, // Direccion Y hacia donde observa la cámara
+                0.0, // Direccion Z hacia donde observa la cámara
+                0.0, // Orientación de la cámara en X 
+                1.0, // Orientación de la cámara en Y
+                0.0);// Orientación de la cámara en Z
 
+        gl.glTranslatef(1, 1, 1);
         gl.glRotatef(this.padre.rotacion, 0.0f, 1.0f, 0.0f);
-        gl.glTranslatef(this.padre.despX, this.padre.despY, this.padre.despZ);
+        //gl.glTranslatef(1, 1, 1);
+        //gl.glTranslatef(this.padre.despX, this.padre.despY, this.padre.despZ);
 
-        gl.glColor3f(1.0f, 0.0f, 0.0f);
-
+        //gl.glColor3f(1.0f, 0.0f, 0.0f);
         //glut.glutSolidTorus(0.5, 1, 20, 20);
         //glut.glutSolidTeapot(1);
-        
-       
-        gl.glBegin(GL2.GL_QUADS);            
-            gl.glVertex3f(0.0f, 0.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 0.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 0.0f, -1.0f);
-            gl.glVertex3f(0.0f, 0.0f, -1.0f);  
-        gl.glEnd();        
-
+        gl.glColor3f(1.0f, 0.0f, 0.0f);
         gl.glBegin(GL2.GL_QUADS);
-            gl.glColor3f(0.0f, 1.0f, 0.0f);
-            gl.glVertex3f(0.0f, 0.0f, -1.0f);            
-            gl.glVertex3f(1.0f, 0.0f, -1.0f);            
-            gl.glVertex3f(1.0f, 1.0f, -1.0f);
-            gl.glVertex3f(0.0f, 1.0f, -1.0f);  
-        gl.glEnd();  
-
-        gl.glBegin(GL2.GL_QUADS);
-            gl.glColor3f(0.0f, 0.0f, 1.0f);
-            gl.glVertex3f(0.0f, 0.0f, 0.0f);            
-            gl.glVertex3f(0.0f, 1.0f, 0.0f);            
-            gl.glVertex3f(0.0f, 1.0f, -1.0f);
-            gl.glVertex3f(0.0f, 0.0f, -1.0f);  
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(1.0f, 0.0f, 0.0f);
+        gl.glVertex3f(1.0f, 0.0f, -1.0f);
+        gl.glVertex3f(0.0f, 0.0f, -1.0f);
         gl.glEnd();
 
+        gl.glColor3f(0.0f, 1.0f, 0.0f);
         gl.glBegin(GL2.GL_QUADS);
-            gl.glColor3f(0.0f, 0.0f, 1.0f);
-            gl.glVertex3f(1.0f, 0.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 1.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 1.0f, -1.0f);
-            gl.glVertex3f(1.0f, 0.0f, -1.0f);  
-        gl.glEnd();     
-        
+
+        gl.glVertex3f(0.0f, 0.0f, -1.0f);
+        gl.glVertex3f(1.0f, 0.0f, -1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glVertex3f(0.0f, 1.0f, -1.0f);
+        gl.glEnd();
+
+        gl.glColor3f(0.0f, 0.0f, 1.0f);
         gl.glBegin(GL2.GL_QUADS);
-            gl.glColor3f(0.0f, 1.0f, 0.0f);
-            gl.glVertex3f(0.0f, 0.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 0.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 1.0f, 0.0f);
-            gl.glVertex3f(0.0f, 1.0f, 0.0f);  
-        gl.glEnd(); 
-        
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 1.0f, 0.0f);
+        gl.glVertex3f(0.0f, 1.0f, -1.0f);
+        gl.glVertex3f(0.0f, 0.0f, -1.0f);
+        gl.glEnd();
+
+        gl.glColor3f(1.0f, 0.0f, 0.0f);
         gl.glBegin(GL2.GL_QUADS);
-            gl.glColor3f(1.0f, 0.0f, 0.0f);
-            gl.glVertex3f(0.0f, 1.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 1.0f, 0.0f);            
-            gl.glVertex3f(1.0f, 1.0f, -1.0f);
-            gl.glVertex3f(0.0f, 1.0f, -1.0f);  
-        gl.glEnd();         
-        
+
+        gl.glVertex3f(1.0f, 0.0f, 0.0f);
+        gl.glVertex3f(1.0f, 1.0f, 0.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glVertex3f(1.0f, 0.0f, -1.0f);
+        gl.glEnd();
+
+        gl.glColor3f(0.0f, 1.0f, 0.0f);
+        gl.glBegin(GL2.GL_QUADS);
+
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(1.0f, 0.0f, 0.0f);
+        gl.glVertex3f(1.0f, 1.0f, 0.0f);
+        gl.glVertex3f(0.0f, 1.0f, 0.0f);
+        gl.glEnd();
+
+        gl.glColor3f(0.0f, 0.0f, 1.0f);
+        gl.glBegin(GL2.GL_QUADS);
+
+        gl.glVertex3f(0.0f, 1.0f, 0.0f);
+        gl.glVertex3f(1.0f, 1.0f, 0.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glVertex3f(0.0f, 1.0f, -1.0f);
+        gl.glEnd();
+
         this.padre.rotacion += 5.0f;
         if (this.padre.rotacion > 360) {
             this.padre.rotacion = 0;
@@ -272,8 +321,8 @@ class Pintor implements GLEventListener {
         // Setup perspective projection, with aspect ratio matches viewport
         gl.glMatrixMode(GL_PROJECTION);  // choose projection matrix
         gl.glLoadIdentity();             // reset projection matrix
-        glu.gluPerspective(fovy, aspect, 1.0, 30.0); // fovy, aspect, zNear, zFar
-      
+        glu.gluPerspective(fovy, aspect, 1.0, 20.0); // fovy, aspect, zNear, zFar
+
     }
 
 }
@@ -293,9 +342,12 @@ class MiKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int codigo = e.getKeyCode();
 
-        System.out.println("codigo presionado = " + codigo);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int codigo = e.getKeyCode();
 
         switch (codigo) {
             case KeyEvent.VK_LEFT:
@@ -311,24 +363,24 @@ class MiKeyListener implements KeyListener {
                 this.padre.despZ -= 0.2f;
                 break;
 
-            case KeyEvent.VK_PAGE_UP:
+            case KeyEvent.VK_A:
                 this.padre.despY += 0.2f;
                 break;
-            case KeyEvent.VK_PAGE_DOWN:
+            case KeyEvent.VK_Z:
                 this.padre.despY -= 0.2f;
                 break;
 
+            case KeyEvent.VK_T:
+                this.padre.rotacion -= 5.0f;
+                break;
+                
             case KeyEvent.VK_R:
                 this.padre.rotacion += 5.0f;
                 break;
         }
-        System.out.println("despX =" + this.padre.despX + " - " + "despZ =" + this.padre.despZ);
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
+        System.out.println("despX =" + this.padre.despX);
+        System.out.println("despY =" + this.padre.despY);
+        System.out.println("despZ =" + this.padre.despZ);
     }
 
 }
