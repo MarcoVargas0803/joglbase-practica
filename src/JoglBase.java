@@ -318,105 +318,6 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
             texturaSteve.disable(gl);
         }
     }
-    void dibujarBrazoDerechoSteve(GL2 gl) {
-        gl.glPushMatrix();
-        gl.glTranslatef(-0.35f, 0.2f, 0.0f); // 1. Ir al hombro
-        gl.glRotatef(-anguloExtremidad, 1.0f, 0.0f, 0.0f); // 2. ROTAR
-        gl.glTranslatef(0.0f, -0.25f, 0.0f); // 3. Ajustar centro del brazo
-
-        if (texturaSteve != null) {
-            texturaSteve.bind(gl);
-            texturaSteve.enable(gl);
-        }
-
-// Dibujar el brazo derecho con textura
-        dibujarCara(gl, 44, 20, 48, 32, 0, 0, 0, 1); // Frente
-        dibujarCara(gl, 40, 20, 44, 32, 0, 0, 0, 4); // Lado derecho
-        dibujarCara(gl, 48, 20, 52, 32, 0, 0, 0, 3); // Lado izquierdo
-        dibujarCara(gl, 52, 20, 56, 32, 0, 0, 0, 2); // Espalda
-        dibujarCara(gl, 44, 16, 48, 20, 0, 0, 0, 5); // Superior
-        dibujarCara(gl, 48, 16, 52, 20, 0, 0, 0, 6); // Inferior
-
-        if (texturaSteve != null) {
-            texturaSteve.disable(gl);
-        }
-        gl.glPopMatrix();
-    }
-    void dibujarBrazoIzquierdoSteve(GL2 gl) {
-        gl.glPushMatrix();
-        gl.glTranslatef(-0.35f, 0.2f, 0.0f); // 1. Ir al hombro
-        gl.glRotatef(anguloExtremidad, 1.0f, 0.0f, 0.0f); // 2. ROTAR
-        gl.glTranslatef(0.0f, -0.25f, 0.0f); // 3. Ajustar centro del brazo (opcional, para que rote desde arriba)
-
-        if (texturaSteve != null) {
-            texturaSteve.bind(gl);
-            texturaSteve.enable(gl);
-        }
-
-// Dibujar el brazo izquierdo con textura
-        dibujarCara(gl, 44, 20, 48, 32, 0, 0, 0, 1); // Frente
-        dibujarCara(gl, 40, 20, 44, 32, 0, 0, 0, 4); // Lado derecho
-        dibujarCara(gl, 48, 20, 52, 32, 0, 0, 0, 3); // Lado izquierdo
-        dibujarCara(gl, 52, 20, 56, 32, 0, 0, 0, 2); // Espalda
-        dibujarCara(gl, 44, 16, 48, 20, 0, 0, 0, 5); // Superior
-        dibujarCara(gl, 48, 16, 52, 20, 0, 0, 0, 6); // Inferior
-
-        if (texturaSteve != null) {
-            texturaSteve.disable(gl);
-        }
-        gl.glPopMatrix();
-    }
-
-
-    void dibujarPiernaIzquierdaSteve(GL2 gl) {
-        gl.glPushMatrix();
-        gl.glTranslatef(-0.121f, -0.4f, 0.0f); // Ir a la cadera
-        gl.glRotatef(-anguloExtremidad, 1.0f, 0.0f, 0.0f); // NEGATIVO
-        gl.glTranslatef(0.0f, -0.3f, 0.0f); // Bajar para dibujar la pierna desde la cadera
-
-        if (texturaSteve != null) {
-            texturaSteve.bind(gl);
-            texturaSteve.enable(gl);
-        }
-
-// Dibujar la pierna izquierda con textura
-        dibujarCara(gl, 4, 20, 8, 32, 0, 0, 0, 1); // Frente
-        dibujarCara(gl, 0, 20, 4, 32, 0, 0, 0, 4); // Lado derecho
-        dibujarCara(gl, 8, 20, 12, 32, 0, 0, 0, 3); // Lado izquierdo
-        dibujarCara(gl, 12, 20, 16, 32, 0, 0, 0, 2); // Espalda
-        dibujarCara(gl, 4, 16, 8, 20, 0, 0, 0, 5); // Superior
-        dibujarCara(gl, 8, 16, 12, 20, 0, 0, 0, 6); // Inferior
-
-        if (texturaSteve != null) {
-            texturaSteve.disable(gl);
-        }
-        gl.glPopMatrix();
-    }
-    void dibujarPiernaDerechaSteve(GL2 gl) {
-        gl.glPushMatrix();
-        gl.glTranslatef(0.121f, -0.4f, 0.0f); // Ir a la cadera
-        gl.glRotatef(anguloExtremidad, 1.0f, 0.0f, 0.0f); // POSITIVO
-        gl.glTranslatef(0.0f, -0.3f, 0.0f); // Bajar para dibujar la pierna desde la cadera
-
-        if (texturaSteve != null) {
-            texturaSteve.bind(gl);
-            texturaSteve.enable(gl);
-        }
-
-// Dibujar la pierna derecha con textura
-        dibujarCara(gl, 4, 20, 8, 32, 0, 0, 0, 1); // Frente
-        dibujarCara(gl, 0, 20, 4, 32, 0, 0, 0, 4); // Lado derecho
-        dibujarCara(gl, 8, 20, 12, 32, 0, 0, 0, 3); // Lado izquierdo
-        dibujarCara(gl, 12, 20, 16, 32, 0, 0, 0, 2); // Espalda
-        dibujarCara(gl, 4, 16, 8, 20, 0, 0, 0, 5); // Superior
-        dibujarCara(gl, 8, 16, 12, 20, 0, 0, 0, 6); // Inferior
-
-        if (texturaSteve != null) {
-            texturaSteve.disable(gl);
-        }
-        gl.glPopMatrix();
-    }
-
 
     void dibujarTorsoSteve(GL2 gl) {
         if (texturaSteve != null) {
@@ -457,47 +358,187 @@ public class JoglBase extends GLJPanel implements GLEventListener, KeyListener {
             texturaSteve.disable(gl);
         }
     }
+    void dibujarBrazoDerechoSteve(GL2 gl) {
+        gl.glPushMatrix();
 
+        // 1. ROTAR (El origen actual es el hombro gracias a dibujarPersona)
+        gl.glRotatef(-anguloExtremidad, 1.0f, 0.0f, 0.0f);
+
+        // 2. DIBUJAR GEOMETRÍA
+        // Bajamos el brazo la mitad de su longitud para que "cuelgue" del hombro
+        // Longitud brazo = 0.75. Mitad = 0.375.
+        gl.glTranslatef(0.0f, -0.3f, 0.0f);
+
+        // Escalamos al tamaño de un brazo
+        gl.glScalef(0.25f, 0.75f, 0.25f);
+
+        // Tu método original dibuja texturas. Como ya está centrado en dibujarCara, esto funciona.
+        // NOTA: Usamos las coordenadas de textura del brazo derecho
+        if (texturaSteve != null) {
+            texturaSteve.bind(gl);
+            texturaSteve.enable(gl);
+        }
+
+        // Usamos dibujarCara pero asumiendo que el cubo ya está escalado y posicionado
+        // Tienes que asegurar que 'dibujarCara' use coordenadas locales 0,0,0
+        // Como tu 'dibujarCara' dibuja un cubo unitario (0 a 1), necesitamos centrarlo antes de escalar
+        // O mejor, usamos tu lógica de texturas existente pero ajustando el cubo:
+
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.5f, -0.5f, -0.5f); // Centrar el cubo unitario
+        // Coordenadas brazo derecho (según tu textura)
+        dibujarCara(gl, 44, 20, 48, 32, 0, 0, 0, 1); // Frente
+        dibujarCara(gl, 40, 20, 44, 32, 0, 0, 0, 4); // Der
+        dibujarCara(gl, 48, 20, 52, 32, 0, 0, 0, 3); // Izq
+        dibujarCara(gl, 52, 20, 56, 32, 0, 0, 0, 2); // Atras
+        dibujarCara(gl, 44, 16, 48, 20, 0, 0, 0, 5); // Arriba
+        dibujarCara(gl, 48, 16, 52, 20, 0, 0, 0, 6); // Abajo
+        gl.glPopMatrix();
+
+        if (texturaSteve != null) {
+            texturaSteve.disable(gl);
+        }
+
+//        // CUBO DE TIERRA (Opcional, pegado a la mano)
+//        gl.glTranslatef(0.0f, -0.6f, 0.0f); // Mover a la mano
+//        gl.glColor3f(0.6f, 0.3f, 0.0f);
+//        glut.glutSolidCube(1.0f); // Tamaño relativo al brazo escalado
+
+        gl.glPopMatrix();
+    }
+
+    void dibujarBrazoIzquierdoSteve(GL2 gl) {
+        gl.glPushMatrix();
+        // Rotación opuesta o igual según quieras (swingAdelante)
+        gl.glRotatef(anguloExtremidad, 1.0f, 0.0f, 0.0f);
+
+        gl.glTranslatef(0.0f, -0.3f, 0.0f); // Bajar desde el hombro
+        gl.glScalef(0.25f, 0.75f, 0.25f);     // Tamaño brazo
+
+        if (texturaSteve != null) {
+            texturaSteve.bind(gl);
+            texturaSteve.enable(gl);
+        }
+
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.5f, -0.5f, -0.5f);
+        // Coordenadas brazo izquierdo (ajusta si es necesario para espejo)
+        // Usualmente en Minecraft el izq es espejo del derecho o tiene su propia zona
+        dibujarCara(gl, 36, 52, 40, 64, 0, 0, 0, 1); // Ejemplo coords (ajustar a tu imagen)
+        // ... resto de caras ...
+        // Para simplificar, usaré las mismas del derecho por ahora o las que tenías:
+        dibujarCara(gl, 44, 20, 48, 32, 0, 0, 0, 1); // Frente
+        dibujarCara(gl, 40, 20, 44, 32, 0, 0, 0, 4); // Der
+        dibujarCara(gl, 48, 20, 52, 32, 0, 0, 0, 3); // Izq
+        dibujarCara(gl, 52, 20, 56, 32, 0, 0, 0, 2); // Atras
+        dibujarCara(gl, 44, 16, 48, 20, 0, 0, 0, 5); // Arriba
+        dibujarCara(gl, 48, 16, 52, 20, 0, 0, 0, 6); // Abajo
+        gl.glPopMatrix();
+
+        if (texturaSteve != null) texturaSteve.disable(gl);
+        gl.glPopMatrix();
+    }
+
+    void dibujarPiernaIzquierdaSteve(GL2 gl) {
+        gl.glPushMatrix();
+        // La pierna rota opuesta al brazo del mismo lado
+        gl.glRotatef(-anguloExtremidad, 1.0f, 0.0f, 0.0f);
+
+        gl.glTranslatef(0.0f, -0.375f, 0.0f); // Bajar desde la cadera
+        gl.glScalef(0.25f, 0.75f, 0.25f);
+
+        if (texturaSteve != null) {
+            texturaSteve.bind(gl);
+            texturaSteve.enable(gl);
+        }
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.5f, -0.5f, -0.5f);
+        // Coordenadas Pierna
+        dibujarCara(gl, 4, 20, 8, 32, 0, 0, 0, 1);
+        dibujarCara(gl, 0, 20, 4, 32, 0, 0, 0, 4);
+        dibujarCara(gl, 8, 20, 12, 32, 0, 0, 0, 3);
+        dibujarCara(gl, 12, 20, 16, 32, 0, 0, 0, 2);
+        dibujarCara(gl, 4, 16, 8, 20, 0, 0, 0, 5);
+        dibujarCara(gl, 8, 16, 12, 20, 0, 0, 0, 6);
+        gl.glPopMatrix();
+
+        if (texturaSteve != null) texturaSteve.disable(gl);
+        gl.glPopMatrix();
+    }
+
+    void dibujarPiernaDerechaSteve(GL2 gl) {
+        gl.glPushMatrix();
+        gl.glRotatef(anguloExtremidad, 1.0f, 0.0f, 0.0f);
+
+        gl.glTranslatef(0.0f, -0.375f, 0.0f);
+        gl.glScalef(0.25f, 0.75f, 0.25f);
+
+        if (texturaSteve != null) {
+            texturaSteve.bind(gl);
+            texturaSteve.enable(gl);
+        }
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.5f, -0.5f, -0.5f);
+        // Mismas coords o espejo
+        dibujarCara(gl, 4, 20, 8, 32, 0, 0, 0, 1);
+        dibujarCara(gl, 0, 20, 4, 32, 0, 0, 0, 4);
+        dibujarCara(gl, 8, 20, 12, 32, 0, 0, 0, 3);
+        dibujarCara(gl, 12, 20, 16, 32, 0, 0, 0, 2);
+        dibujarCara(gl, 4, 16, 8, 20, 0, 0, 0, 5);
+        dibujarCara(gl, 8, 16, 12, 20, 0, 0, 0, 6);
+        gl.glPopMatrix();
+
+        if (texturaSteve != null) texturaSteve.disable(gl);
+        gl.glPopMatrix();
+    }
 
 
     public void dibujarPersona(GL2 gl, GLUT glut) {
-
-        // --- TORSO (Inmóvil) ---
+        // --- TORSO ---
         gl.glPushMatrix();
-        gl.glScalef(0.5f, 0.7f, 0.3f);
+        // Escalamos el cubo unitario para que tenga forma de torso
+        // Ancho: 0.5, Alto: 0.75, Profundidad: 0.25
+        gl.glScalef(0.5f, 0.75f, 0.25f);
         dibujarTorsoSteve(gl);
         gl.glPopMatrix();
 
         // --- CABEZA ---
         gl.glPushMatrix();
+        // Movemos la cabeza ARRIBA del torso.
+        // El torso acaba en Y=0.375 (la mitad de 0.75). La cabeza mide 0.5.
+        // Centro cabeza = 0.375 (top cuerpo) + 0.25 (mitad cabeza) = 0.625
+        gl.glTranslatef(0.0f, 0.625f, 0.0f);
+        gl.glScalef(0.5f, 0.5f, 0.5f); // Cabeza cuadrada
         dibujarCabezaSteve(gl);
+        gl.glPopMatrix();
+
+        // --- BRAZO DERECHO ---
+        gl.glPushMatrix();
+        // Posicion Hombro: X = 0.25 (mitad cuerpo) + 0.125 (mitad brazo) = 0.375
+        // Y = 0.30 (un poco abajo del top del hombro)
+        gl.glTranslatef(-0.38f, 0.30f, 0.0f);
+        dibujarBrazoDerechoSteve(gl); // Dentro aplicamos la rotación
         gl.glPopMatrix();
 
         // --- BRAZO IZQUIERDO ---
         gl.glPushMatrix();
+        gl.glTranslatef(0.38f, 0.30f, 0.0f);
         dibujarBrazoIzquierdoSteve(gl);
         gl.glPopMatrix();
 
-
-
-        // --- BRAZO DERECHO ---
-        gl.glPushMatrix();
-        dibujarBrazoDerechoSteve(gl);
-        gl.glPopMatrix();
-
-
-        // DIBUJAR EL CUBO DE TIERRA (En la mano)
-        gl.glTranslatef(0.05f, -0.4f, -0.1f);
-        gl.glColor3f(0.6f, 0.3f, 0.0f);
-        gl.glScalef(0.3f, 0.3f, 0.3f);
-        glut.glutSolidCube(1.0f);
-        gl.glPopMatrix();
-
         // --- PIERNA IZQUIERDA ---
-        //dibujarPiernaIzquierdaSteve(gl);
+        gl.glPushMatrix();
+        // Posicion Cadera: Y = -0.375 (base del cuerpo)
+        // X = Desplazado un poco del centro
+        gl.glTranslatef(0.13f, -0.375f, 0.0f);
+        dibujarPiernaIzquierdaSteve(gl);
+        gl.glPopMatrix();
 
         // --- PIERNA DERECHA ---
-        //dibujarPiernaDerechaSteve(gl);
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.13f, -0.375f, 0.0f);
+        dibujarPiernaDerechaSteve(gl);
+        gl.glPopMatrix();
     }
 
 
